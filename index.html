@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰커뮤니티 기술 공유 - 웹 컴포넌트 & M3U8 스트리밍 도입기</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-50px) translateY(-50px); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .presenter {
+            background: #f8f9fa;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .presenter h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .presenter p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .sessions {
+            padding: 40px;
+        }
+
+        .session {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateX(-10px);
+            animation: slideInRight 0.6s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .session:nth-child(2) {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #2c3e50;
+            animation-delay: 0.2s;
+        }
+
+        .session::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        @keyframes slideInRight {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .session h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .session .speaker {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .session p {
+            line-height: 1.6;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .material-link {
+            margin-top: 15px;
+        }
+
+        .material-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.2);
+            color: inherit;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .material-link a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .recommendations {
+            background: #e8f5e8;
+            padding: 30px;
+            margin: 30px 40px;
+            border-radius: 15px;
+            border-left: 5px solid #27ae60;
+        }
+
+        .recommendations h3 {
+            color: #27ae60;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendations ul {
+            list-style: none;
+        }
+
+        .recommendations li {
+            padding: 8px 0;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendations li::before {
+            content: '✨';
+            font-size: 1.2rem;
+        }
+
+        .event-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-item i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .info-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .cta {
+            background: #ff6b6b;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .cta i {
+            margin-right: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                margin: 10px;
+            }
+
+            .sessions, .event-info {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-rocket"></i> 기술 공유 세션</h1>
+            <p class="subtitle">리뷰커뮤니티 기술 공유 - 웹 컴포넌트 & M3U8 스트리밍 도입기</p>
+        </div>
+
+        <div class="presenter">
+            <h2><i class="fas fa-user-tie"></i> 발표자 소개</h2>
+            <p>안녕하세요, <strong>버티컬서비스개발팀 김덕구</strong>입니다!<br>
+            저희 리뷰커뮤니티 스쿼드에서 실제 서비스에 적용하고 운영하며 얻은 기술적 인사이트를 공유하는 자리를 마련했습니다.</p>
+        </div>
+
+        <div class="sessions">
+            <div class="session">
+                <h3><i class="fas fa-video"></i> M3U8(HLS) 스트리밍 도입기</h3>
+                <div class="speaker">👩‍💻 발표자: 버티컬서비스개발팀 - 박보라</div>
+                <p>숏폼 서비스에서 기존 MP4의 한계를 극복하고 사용자 경험을 개선하기 위해 M3U8 포맷을 도입한 과정을 소개합니다.</p>
+                <div class="material-link">
+                    <a href="https://oyitsm.cj.net/confluence/pages/viewpage.action?pageId=734600908" target="_blank">
+                        <i class="fas fa-file-alt"></i> 발표자료 미리보기
+                    </a>
+                </div>
+            </div>
+
+            <div class="session">
+                <h3><i class="fab fa-js-square"></i> 웹 컴포넌트(LIT) 도입기</h3>
+                <div class="speaker">👨‍💻 발표자: 버티컬서비스개발팀 - 김덕구</div>
+                <p>파편화된 멀티 프레임워크 환경에서 동일한 리뷰 컴포넌트를 제공하기 위해 LIT 웹 컴포넌트를 도입한 실전 경험을 공유합니다.</p>
+                <div class="material-link">
+                    <a href="https://oyitsm.cj.net/confluence/pages/viewpage.action?pageId=735742876" target="_blank">
+                        <i class="fas fa-file-alt"></i> 발표자료 미리보기
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="recommendations">
+            <h3><i class="fas fa-bullseye"></i> 이런 분들께 추천합니다</h3>
+            <ul>
+                <li>영상 스트리밍 최적화와 사용자 경험 개선을 고민하시는 분</li>
+                <li>멀티 프레임워크 환경의 컴포넌트 통합 고민이 있으신 분</li>
+                <li>웹 표준 기술과 프레임워크 독립적 개발에 관심 있으신 분</li>
+            </ul>
+            <p style="margin-top: 15px; font-weight: 500;">실무에서 적용 가능한 기술적 인사이트와 시행착오를 통해 얻은 노하우를 얻어가실 수 있을 것입니다!</p>
+        </div>
+
+        <div class="event-info">
+            <h2><i class="fas fa-calendar-alt"></i> 세션 정보</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <h4>일정</h4>
+                    <p>2025. 11. 06. (목)<br>오후 3:00 ~ 4:00</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>장소</h4>
+                    <p>2503<br>(온라인 참석 권장)</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-hourglass-half"></i>
+                    <h4>소요시간</h4>
+                    <p>각 세션 30분 내외<br>총 1시간</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-video"></i>
+                    <h4>온라인 참석</h4>
+                    <p>Google meet 링크<br>(추후 공유)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <i class="fas fa-hands-clapping"></i>
+            관심있으신 분들은 참석 부탁드리겠습니다 🙏
+        </div>
+    </div>
+
+    <script>
+        // 간단한 인터랙션 효과
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessions = document.querySelectorAll('.session');
+
+            sessions.forEach((session, index) => {
+                session.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+
+                session.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
