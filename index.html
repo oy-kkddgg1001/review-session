@@ -223,6 +223,16 @@
             position: relative;
         }
 
+        .card-insight {
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 12px;
+            border-left: 3px solid #667eea;
+            position: relative;
+        }
+
         .card p {
             color: #a0aec0;
             line-height: 1.6;
@@ -520,17 +530,17 @@
         <div class="hero">
             <h1>기술 공유 세션</h1>
             <p class="subtitle">리뷰커뮤니티 스쿼드의 실전 기술 도입기</p>
-            
+
             <div class="tech-stack">
                 <span class="tech-badge">🎥 M3U8 Streaming</span>
+                <span class="tech-badge">🎬 Video Optimization</span>
                 <span class="tech-badge">🎨 Web Components</span>
                 <span class="tech-badge">⚡ LIT Framework</span>
-                <span class="tech-badge">🚀 Micro Frontend</span>
             </div>
         </div>
 
         <div class="dday-container">
-            <div class="dday-title">📅 발표까지 남은 시간</div>
+            <div class="dday-title">발표까지 남은 시간</div>
             <div class="dday-timer">
                 <div class="time-unit">
                     <span class="time-value" id="days">00</span>
@@ -570,7 +580,8 @@
             <div class="card">
                 <span class="card-icon">🎥</span>
                 <h3>M3U8(HLS) 스트리밍 도입기</h3>
-                <p><span class="highlight">박보라</span> | 숏폼 서비스에서 기존 MP4의 한계를 극복하고 사용자 경험을 개선하기 위한 여정</p>
+                <div class="card-insight">💡 인사이트: 영상 변환 및 최적화, 어떻게 사용하고 활용하면 되는지</div>
+                <p><span class="highlight">박보라</span> | 숏폼 서비스에서 기존 MP4의 한계를 극복하고 사용자 경험을 개선하기 위한 여정. 구성원들이 편하게 영상을 변환하고 사용할 수 있도록 백오피스까지 구축한 실전 경험</p>
                 <div style="margin-top: 20px;">
                     <a href="https://oyitsm.cj.net/confluence/pages/viewpage.action?pageId=734600908" target="_blank" class="cta-button" style="font-size: 1rem; padding: 12px 30px;">발표 자료 보러가기 →</a>
                 </div>
@@ -579,7 +590,8 @@
             <div class="card">
                 <span class="card-icon">⚡</span>
                 <h3>Web Components with LIT 도입기</h3>
-                <p><span class="highlight">김덕구</span> | 파편화된 멀티 프레임워크 환경에서 하나의 컴포넌트로 통합한 실전 경험</p>
+                <div class="card-insight">💡 인사이트: Web Component 프로젝트 만들기 & 리뷰 웹컴포넌트를 서비스에 녹이기</div>
+                <p><span class="highlight">김덕구</span> | 리뷰 서비스에서 필요로 했던 문제를 해결하기 위한 LIT 도입 과정과 실제 효과, 그리고 여러분의 서비스에서도 활용할 수 있는 실전 인사이트</p>
                 <div style="margin-top: 20px;">
                     <a href="https://oyitsm.cj.net/confluence/pages/viewpage.action?pageId=735742876" target="_blank" class="cta-button" style="font-size: 1rem; padding: 12px 30px;">발표 자료 보러가기 →</a>
                 </div>
@@ -603,7 +615,7 @@
             <p style="color: #a0aec0; text-align: center; margin-bottom: 30px;">
                 발표 내용에 대해 궁금한 점이 있으시면 자유롭게 질문해주세요!
             </p>
-            
+
             <div class="qa-form">
                 <div class="form-group">
                     <label>세션 선택</label>
@@ -659,11 +671,11 @@
         // QA 기능
         function loadQuestions() {
             const questionsQuery = query(questionsRef, orderByChild('timestamp'));
-            
+
             onValue(questionsQuery, (snapshot) => {
                 const qaList = document.getElementById('qa-list');
                 const questions = [];
-                
+
                 snapshot.forEach((childSnapshot) => {
                     questions.push(childSnapshot.val());
                 });
@@ -697,11 +709,11 @@
                 session,
                 name,
                 question,
-                date: new Date().toLocaleString('ko-KR', { 
-                    month: 'short', 
-                    day: 'numeric', 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
+                date: new Date().toLocaleString('ko-KR', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
                 }),
                 timestamp: Date.now()
             }).then(() => {
@@ -716,7 +728,7 @@
 
         // 페이지 로드 시 질문 목록 불러오기
         loadQuestions();
-        
+
         // D-Day 타이머
         const targetDate = new Date('2025-11-06T15:00:00').getTime();
         const endDate = new Date('2025-11-06T16:00:00').getTime();
@@ -740,7 +752,7 @@
                 const remaining = endDate - now;
                 const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-                
+
                 document.getElementById('days').textContent = '00';
                 document.getElementById('hours').textContent = '00';
                 document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
@@ -808,7 +820,7 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             particles.forEach(particle => {
                 particle.update();
                 particle.draw();
