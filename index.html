@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리뷰커뮤니티 기술 공유 - 웹 컴포넌트 & M3U8 스트리밍 도입기</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>🚀 Web Components with LIT - 발표 인트로</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,23 +13,41 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            color: white;
+            overflow-x: hidden;
             min-height: 100vh;
-            padding: 20px;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
 
         .container {
-            max-width: 900px;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            overflow: hidden;
-            animation: slideUp 0.8s ease-out;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        @keyframes slideUp {
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -41,356 +58,796 @@
             }
         }
 
-        .header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
-            animation: float 20s linear infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(-50px) translateY(-50px); }
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .header .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-
-        .presenter {
-            background: #f8f9fa;
-            padding: 30px;
-            border-left: 5px solid #667eea;
-        }
-
-        .presenter h2 {
-            color: #2c3e50;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .presenter p {
-            color: #555;
-            line-height: 1.6;
-            font-size: 1.1rem;
-        }
-
-        .sessions {
-            padding: 40px;
-        }
-
-        .session {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 30px;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transform: translateX(-10px);
-            animation: slideInRight 0.6s ease-out forwards;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .session:nth-child(2) {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #2c3e50;
-            animation-delay: 0.2s;
-        }
-
-        .session::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            transform: translate(30px, -30px);
-        }
-
-        @keyframes slideInRight {
-            to {
-                transform: translateX(0);
-            }
-        }
-
-        .session h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .session .speaker {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 10px;
-        }
-
-        .session p {
-            line-height: 1.6;
-            font-size: 1rem;
-            margin-bottom: 15px;
-        }
-
-        .material-link {
-            margin-top: 15px;
-        }
-
-        .material-link a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.2);
-            color: inherit;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .material-link a:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-
-        .recommendations {
-            background: #e8f5e8;
-            padding: 30px;
-            margin: 30px 40px;
-            border-radius: 15px;
-            border-left: 5px solid #27ae60;
-        }
-
-        .recommendations h3 {
-            color: #27ae60;
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 20px;
-            font-size: 1.3rem;
+            line-height: 1.2;
+            animation: gradientShift 3s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #a0aec0;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .tech-stack {
             display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .recommendations ul {
-            list-style: none;
-        }
-
-        .recommendations li {
-            padding: 8px 0;
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .recommendations li::before {
-            content: '✨';
-            font-size: 1.2rem;
-        }
-
-        .event-info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            justify-content: center;
             gap: 20px;
+            flex-wrap: wrap;
             margin-top: 30px;
         }
 
-        .info-item {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
+        .tech-badge {
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #667eea;
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .info-item i {
-            font-size: 2rem;
-            margin-bottom: 10px;
+        .tech-badge:nth-child(2) { animation-delay: 0.5s; }
+        .tech-badge:nth-child(3) { animation-delay: 1s; }
+        .tech-badge:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .tech-badge:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .dday-container {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 600px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .dday-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .dday-timer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .time-unit {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .time-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            display: block;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            color: #a0aec0;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 60px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
             display: block;
         }
 
-        .info-item h4 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+            position: relative;
         }
 
-        .info-item p {
-            font-size: 0.9rem;
-            opacity: 0.9;
+        .card p {
+            color: #a0aec0;
+            line-height: 1.6;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .qr-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .qr-code {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .qr-code img {
+            display: block;
+            width: 120px;
+            height: 120px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: 600;
         }
 
         .cta {
-            background: #ff6b6b;
-            color: white;
-            padding: 30px;
             text-align: center;
+            margin-top: 60px;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 1s ease-out 1.2s both;
+        }
+
+        .qr-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .qr-code {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-code img {
+            display: block;
+        }
+
+        .qa-section {
+            margin-top: 60px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 1s ease-out 1.5s both;
+        }
+
+        .qa-section h3 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .qa-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #a0aec0;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group select option {
+            background: #0a0e27;
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .qa-list {
+            margin-top: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .qa-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .qa-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .qa-question {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .qa-author {
+            color: #667eea;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .qa-session-badge {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .qa-content {
+            color: #a0aec0;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
             font-size: 1.2rem;
-            font-weight: 500;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .cta i {
-            margin-right: 10px;
-            animation: bounce 2s infinite;
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #a0aec0;
+            font-size: 0.9rem;
+            margin-top: 5px;
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
+            .dday-timer {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .container {
-                margin: 10px;
-            }
-
-            .sessions, .event-info {
-                padding: 20px;
+            .content-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <canvas id="particles-canvas"></canvas>
+
     <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-rocket"></i> 기술 공유 세션</h1>
-            <p class="subtitle">리뷰커뮤니티 기술 공유 - 웹 컴포넌트 & M3U8 스트리밍 도입기</p>
-        </div>
-
-        <div class="presenter">
-            <h2><i class="fas fa-user-tie"></i> 발표자 소개</h2>
-            <p>안녕하세요, <strong>버티컬서비스개발팀 김덕구</strong>입니다!<br>
-            저희 리뷰커뮤니티 스쿼드에서 실제 서비스에 적용하고 운영하며 얻은 기술적 인사이트를 공유하는 자리를 마련했습니다.</p>
-        </div>
-
-        <div class="sessions">
-            <div class="session">
-                <h3><i class="fas fa-video"></i> M3U8(HLS) 스트리밍 도입기</h3>
-                <div class="speaker">👩‍💻 발표자: 버티컬서비스개발팀 - 박보라</div>
-                <p>숏폼 서비스에서 기존 MP4의 한계를 극복하고 사용자 경험을 개선하기 위해 M3U8 포맷을 도입한 과정을 소개합니다.</p>
-                <div class="material-link">
-                    <a href="https://oyitsm.cj.net/confluence/pages/viewpage.action?pageId=734600908" target="_blank">
-                        <i class="fas fa-file-alt"></i> 발표자료 미리보기
-                    </a>
-                </div>
-            </div>
-
-            <div class="session">
-                <h3><i class="fab fa-js-square"></i> 웹 컴포넌트(LIT) 도입기</h3>
-                <div class="speaker">👨‍💻 발표자: 버티컬서비스개발팀 - 김덕구</div>
-                <p>파편화된 멀티 프레임워크 환경에서 동일한 리뷰 컴포넌트를 제공하기 위해 LIT 웹 컴포넌트를 도입한 실전 경험을 공유합니다.</p>
-                <div class="material-link">
-                    <a href="https://oyitsm.cj.net/confluence/pages/viewpage.action?pageId=735742876" target="_blank">
-                        <i class="fas fa-file-alt"></i> 발표자료 미리보기
-                    </a>
-                </div>
+        <div class="hero">
+            <h1>기술 공유 세션</h1>
+            <p class="subtitle">리뷰커뮤니티 스쿼드의 실전 기술 도입기</p>
+            
+            <div class="tech-stack">
+                <span class="tech-badge">🎥 M3U8 Streaming</span>
+                <span class="tech-badge">🎨 Web Components</span>
+                <span class="tech-badge">⚡ LIT Framework</span>
+                <span class="tech-badge">🚀 Micro Frontend</span>
             </div>
         </div>
 
-        <div class="recommendations">
-            <h3><i class="fas fa-bullseye"></i> 이런 분들께 추천합니다</h3>
-            <ul>
-                <li>영상 스트리밍 최적화와 사용자 경험 개선을 고민하시는 분</li>
-                <li>멀티 프레임워크 환경의 컴포넌트 통합 고민이 있으신 분</li>
-                <li>웹 표준 기술과 프레임워크 독립적 개발에 관심 있으신 분</li>
-            </ul>
-            <p style="margin-top: 15px; font-weight: 500;">실무에서 적용 가능한 기술적 인사이트와 시행착오를 통해 얻은 노하우를 얻어가실 수 있을 것입니다!</p>
-        </div>
-
-        <div class="event-info">
-            <h2><i class="fas fa-calendar-alt"></i> 세션 정보</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <h4>일정</h4>
-                    <p>2025. 11. 06. (목)<br>오후 3:00 ~ 4:00</p>
+        <div class="dday-container">
+            <div class="dday-title">📅 발표까지 남은 시간</div>
+            <div class="dday-timer">
+                <div class="time-unit">
+                    <span class="time-value" id="days">00</span>
+                    <span class="time-label">Days</span>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>장소</h4>
-                    <p>2503<br>(온라인 참석 권장)</p>
+                <div class="time-unit">
+                    <span class="time-value" id="hours">00</span>
+                    <span class="time-label">Hours</span>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-hourglass-half"></i>
-                    <h4>소요시간</h4>
-                    <p>각 세션 30분 내외<br>총 1시간</p>
+                <div class="time-unit">
+                    <span class="time-value" id="minutes">00</span>
+                    <span class="time-label">Minutes</span>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-video"></i>
-                    <h4>온라인 참석</h4>
-                    <p>Google meet 링크<br>(추후 공유)</p>
+                <div class="time-unit">
+                    <span class="time-value" id="seconds">00</span>
+                    <span class="time-label">Seconds</span>
                 </div>
             </div>
         </div>
 
-        <div class="cta">
-            <i class="fas fa-hands-clapping"></i>
-            관심있으신 분들은 참석 부탁드리겠습니다 🙏
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value">2</div>
+                <div class="stat-label">발표 세션</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">60분</div>
+                <div class="stat-label">총 소요시간</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">실전 경험</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <span class="card-icon">🎥</span>
+                <h3>M3U8(HLS) 스트리밍 도입기</h3>
+                <p><span class="highlight">박보라</span> | 숏폼 서비스에서 기존 MP4의 한계를 극복하고 사용자 경험을 개선하기 위한 여정</p>
+                <div style="margin-top: 20px;">
+                    <a href="https://oyitsm.cj.net/confluence/pages/viewpage.action?pageId=734600908" target="_blank" class="cta-button" style="font-size: 1rem; padding: 12px 30px;">발표 자료 보러가기 →</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">⚡</span>
+                <h3>Web Components with LIT 도입기</h3>
+                <p><span class="highlight">김덕구</span> | 파편화된 멀티 프레임워크 환경에서 하나의 컴포넌트로 통합한 실전 경험</p>
+                <div style="margin-top: 20px;">
+                    <a href="https://oyitsm.cj.net/confluence/pages/viewpage.action?pageId=735742876" target="_blank" class="cta-button" style="font-size: 1rem; padding: 12px 30px;">발표 자료 보러가기 →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta" style="margin-top: 40px;">
+            <p style="color: #a0aec0; font-size: 1.1rem;">📍 2025. 11. 06. (목) 오후 3:00 ~ 4:00 | 2503호</p>
+        </div>
+
+        <div class="qr-section">
+            <h3>📱 세션 공유</h3>
+            <p style="color: #a0aec0; margin-bottom: 20px;">QR 코드를 스캔하여 이 페이지를 공유하세요</p>
+            <div class="qr-code">
+                <img id="qr-image" alt="QR Code">
+            </div>
+        </div>
+
+        <div class="qa-section">
+            <h3>💬 질문하기</h3>
+            <p style="color: #a0aec0; text-align: center; margin-bottom: 30px;">
+                발표 내용에 대해 궁금한 점이 있으시면 자유롭게 질문해주세요!
+            </p>
+            
+            <div class="qa-form">
+                <div class="form-group">
+                    <label>세션 선택</label>
+                    <select id="qa-session">
+                        <option value="M3U8">🎥 M3U8(HLS) 스트리밍 도입기</option>
+                        <option value="WebComponents">⚡ Web Components with LIT 도입기</option>
+                        <option value="전체">💬 전체 세션</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>이름 또는 닉네임</label>
+                    <input type="text" id="qa-name" placeholder="이름 또는 닉네임을 입력해주세요">
+                </div>
+                <div class="form-group">
+                    <label>질문</label>
+                    <textarea id="qa-question" placeholder="질문 내용을 입력해주세요"></textarea>
+                </div>
+                <button class="submit-btn" onclick="submitQuestion()">질문 등록하기</button>
+            </div>
+
+            <div class="qa-list" id="qa-list">
+                <!-- 질문 목록이 여기에 표시됩니다 -->
+            </div>
         </div>
     </div>
 
-    <script>
-        // 간단한 인터랙션 효과
-        document.addEventListener('DOMContentLoaded', function() {
-            const sessions = document.querySelectorAll('.session');
+    <script type="module">
+        // Firebase 설정
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, push, onValue, query, orderByChild } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-            sessions.forEach((session, index) => {
-                session.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px) scale(1.02)';
-                    this.style.transition = 'all 0.3s ease';
+        // Firebase 설정
+        const firebaseConfig = {
+            apiKey: "AIzaSyAQbY_STdXNdFV3tmh1hxBSdVpg3o0whz8",
+            authDomain: "maru-project-489f6.firebaseapp.com",
+            databaseURL: "https://maru-project-489f6-default-rtdb.firebaseio.com",
+            projectId: "maru-project-489f6",
+            storageBucket: "maru-project-489f6.appspot.com",
+            messagingSenderId: "237350461577",
+            appId: "1:237350461577:web:a76d88091a471f4cb9a658",
+            measurementId: "G-G2LRJS8BYG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const questionsRef = ref(database, 'questions');
+
+        // QR 코드 생성
+        const currentUrl = window.location.href;
+        const qrImage = document.getElementById('qr-image');
+        qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}`;
+
+        // QA 기능
+        function loadQuestions() {
+            const questionsQuery = query(questionsRef, orderByChild('timestamp'));
+            
+            onValue(questionsQuery, (snapshot) => {
+                const qaList = document.getElementById('qa-list');
+                const questions = [];
+                
+                snapshot.forEach((childSnapshot) => {
+                    questions.push(childSnapshot.val());
                 });
 
-                session.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
+                if (questions.length === 0) {
+                    qaList.innerHTML = '<p style="color: #a0aec0; text-align: center;">아직 등록된 질문이 없습니다.</p>';
+                    return;
+                }
+
+                qaList.innerHTML = questions.reverse().map(q => `
+                    <div class="qa-item">
+                        <div class="qa-session-badge">${q.session || '전체'}</div>
+                        <div class="qa-question">Q. ${q.question}</div>
+                        <div class="qa-author">- ${q.name} | ${q.date}</div>
+                    </div>
+                `).join('');
+            });
+        }
+
+        window.submitQuestion = function() {
+            const session = document.getElementById('qa-session').value;
+            const name = document.getElementById('qa-name').value.trim();
+            const question = document.getElementById('qa-question').value.trim();
+
+            if (!name || !question) {
+                alert('이름과 질문을 모두 입력해주세요.');
+                return;
+            }
+
+            push(questionsRef, {
+                session,
+                name,
+                question,
+                date: new Date().toLocaleString('ko-KR', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                }),
+                timestamp: Date.now()
+            }).then(() => {
+                document.getElementById('qa-name').value = '';
+                document.getElementById('qa-question').value = '';
+                document.getElementById('qa-session').value = 'M3U8';
+                alert('질문이 등록되었습니다! 🎉');
+            }).catch((error) => {
+                alert('질문 등록에 실패했습니다: ' + error.message);
+            });
+        }
+
+        // 페이지 로드 시 질문 목록 불러오기
+        loadQuestions();
+        
+        // D-Day 타이머
+        const targetDate = new Date('2025-11-06T15:00:00').getTime();
+        const endDate = new Date('2025-11-06T16:00:00').getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            const endDistance = endDate - now;
+
+            if (endDistance < 0) {
+                // 발표 종료
+                document.querySelector('.dday-title').textContent = '✅ 발표가 종료되었습니다';
+                document.querySelectorAll('.time-value').forEach(el => el.textContent = '00');
+                clearInterval(timerInterval);
+                return;
+            }
+
+            if (distance < 0) {
+                // 발표 진행 중
+                document.querySelector('.dday-title').textContent = '🎉 발표 진행 중!';
+                const remaining = endDate - now;
+                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+                return;
+            }
+
+            // 발표 시작 전
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        updateTimer();
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // 파티클 효과
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // 파티클 연결선
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(102, 126, 234, ${0.2 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
                 });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // 마우스 인터랙션
+        canvas.addEventListener('mousemove', (e) => {
+            particles.forEach(particle => {
+                const dx = particle.x - e.clientX;
+                const dy = particle.y - e.clientY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 100) {
+                    particle.x += dx / distance * 2;
+                    particle.y += dy / distance * 2;
+                }
             });
         });
     </script>
